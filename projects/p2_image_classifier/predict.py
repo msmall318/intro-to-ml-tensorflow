@@ -1,12 +1,8 @@
 import argparse
 import tensorflow as tf
-import tensorflow_datasets as tfds
 import tensorflow_hub as hub
-import matplotlib.pyplot as plt
 import json
 import numpy as np
-import pandas as pd
-import boto3
 import keras
 from PIL import Image
 # Ignore some warnings that are not relevant (you can remove this if you prefer)
