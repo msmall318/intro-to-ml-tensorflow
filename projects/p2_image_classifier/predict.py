@@ -47,15 +47,21 @@ def predict(image_path, model, top_k):
     image_batch = np.expand_dims(processed_test_image, axis=0)
     probs = model.predict(image_batch)
     index = [str(i) for i in range(len(probs[0]))]
-    temp = sorted(zip(probs[0], index, class_names), reverse=True)[:top_k]
+    temp = sorted(zip(probs[0], index), reverse=True)[:top_k]
     probs = [i[0] for i in temp]
     classes = [i[1] for i in temp]
-    names = [class_names[i[2]] for i in temp]
-    return probs, classes, names
+    if args.category_names:
+        names = [class_names[i[1]] for i in temp]
+        return probs, classes, names
+    else:
+        return probs, classes
 
-probs, classes, names = predict(args.img, model, args.top_k)
-
-
-print(probs)
-print(classes)
-print(names)
+if args.category_names:
+    probs, classes, names = predict(args.img, model, args.top_k)
+    print(probs)
+    print(classes)
+    print(names)
+else:
+    probs, classes = predict(args.img, model, args.top_k)
+    print(probs)
+    print(classes)
